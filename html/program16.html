@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Year Calendar</title>
+  <style>
+    .calendar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+    .month {
+      border: 1px solid #333;
+      padding: 7px;
+      text-align: center;
+      font-weight: bold;
+      background-color:skyblue;
+    }
+    .month-name {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      gap: 5px;
+    }
+    .days div {
+      padding: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Generate Calendar for Year</h2>
+  <input type="number" id="year" placeholder="Enter year" />
+  <button onclick="generateCalendar()">Generate Calendar</button>
+
+  <div id="calendar" class="calendar"></div>
+
+  <script>
+    function generateCalendar() {
+      const year = document.getElementById('year').value;
+      if (!year) {
+        alert("Please enter a valid year.");
+        return;
+      }
+
+      const months = [
+        'January', 'February', 'March', 'April', 'May', 'June', 
+        'July', 'August', 'September', 'October', 'November', 'December'
+      ];
+
+      const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+      let calendarHTML = '';
+
+      for (let month = 0; month < 12; month++) {
+        const firstDay = new Date(year, month, 1).getDay();
+        const totalDays = new Date(year, month + 1, 0).getDate();
+
+        // Create a month box
+        calendarHTML += `<div class="month">
+                          <div class="month-name">${months[month]} ${year}</div>
+                          <div class="days">`;
+
+        // Add the days of the week header
+        for (let i = 0; i < 7; i++) {
+          calendarHTML += `<div>${daysOfWeek[i]}</div>`;
+        }
+
+        // Add empty spaces for the first day of the month
+        let day = 1;
+        for (let i = 0; i < firstDay; i++) {
+          calendarHTML += '<div></div>'; // Empty cell for days before the 1st
+        }
+
+        // Add the days of the month
+        for (let i = firstDay; i < 7 && day <= totalDays; i++) {
+          calendarHTML += `<div>${day}</div>`;
+          day++;
+        }
+
+        // Add the remaining weeks
+        while (day <= totalDays) {
+          for (let i = 0; i < 7 && day <= totalDays; i++) {
+            calendarHTML += `<div>${day}</div>`;
+            day++;
+          }
+        }
+
+        calendarHTML += `</div></div>`; // Close the month and days container
+      }
+
+      document.getElementById('calendar').innerHTML = calendarHTML;
+    }
+  </script>
+
+</body>
+</html>
