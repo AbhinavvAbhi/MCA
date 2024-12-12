@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Over Image to Change Background</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s ease, background-image 0.3s ease;
+      background-size: cover;
+      background-position: center;
+    }
+
+    #image {
+      width: 300px;
+      height: 300px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Custom mouse cursor */
+    body {
+      cursor: url('https://upload.wikimedia.org/wikipedia/commons/6/6a/Crystal_Clear_app_kde_mouse.svg'), auto;
+    }
+  </style>
+</head>
+<body>
+  <img id="image" src="https://thumbs.dreamstime.com/b/audio-mixing-controller-dj-mixer-control-panel-equalizer-party-setting-audio-mixing-controller-dj-mixer-315475288.jpg" alt="Mouse Image">
+
+  <script>
+    const image = document.getElementById('image');
+
+    // Define colors for top half hover
+    const colors = ['#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FFFF33', '#33FFF5'];
+
+    // Define background images for bottom half hover
+    const backgroundImages = [
+      'url("https://via.placeholder.com/150/FF5733/FFFFFF?text=Background+1")',
+      'url("https://via.placeholder.com/150/33FF57/FFFFFF?text=Background+2")',
+      'url("https://via.placeholder.com/150/3357FF/FFFFFF?text=Background+3")',
+      'url("https://via.placeholder.com/150/FF33A1/FFFFFF?text=Background+4")',
+      'url("https://via.placeholder.com/150/FFFF33/FFFFFF?text=Background+5")'
+    ];
+
+    // Add event listener for mousemove on the image
+    image.addEventListener('mousemove', (e) => {
+      // Get the Y position of the mouse relative to the image
+      const mouseY = e.clientY - image.getBoundingClientRect().top;
+
+      // If the mouse is in the top half of the image
+      if (mouseY < image.height / 2) {
+        // Change the background color
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        document.body.style.backgroundColor = randomColor;
+        document.body.style.backgroundImage = ''; // Reset background image
+      }
+      // If the mouse is in the bottom half of the image
+      else {
+        // Change the background image
+        const randomImage = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+        document.body.style.backgroundImage = randomImage;
+        document.body.style.backgroundColor = ''; // Reset background color
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mouse Over Image to Change Background</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+    #image {
+      width: 200px;
+      height: 200px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    /* Custom mouse cursor */
+    body {
+      cursor: url('https://upload.wikimedia.org/wikipedia/commons/6/6a/Crystal_Clear_app_kde_mouse.svg'), auto;
+    }
+  </style>
+</head>
+<body>
+  <img id="image" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqWu3qlw3KxDU5sAX_6Wm8-sEHSQqqFM0fXw&s" alt="Mouse Image">
+
+  <script>
+    const image = document.getElementById('image');
+
+    // Define the colors for background change
+    const colors = ['red', 'yellow', 'light', 'green', 'black', 'skyblue'];
+
+    // Add event listener for when mouse is over the image
+    image.addEventListener('mouseenter', () => {
+      // Get a random color from the colors array
+      const randomColor = colors[Math.floor(Math.random() * colors.length)];
+      document.body.style.backgroundColor = randomColor;
+    });
+
+    // Optionally change the background back when mouse leaves the image
+    image.addEventListener('mouseleave', () => {
+      document.body.style.backgroundColor = ''; // Reset to default background
+    });
+  </script>
+</body>
+</html>
